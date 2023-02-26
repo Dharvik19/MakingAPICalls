@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 
 import MoviesList from './components/MoviesList';
 import './App.css';
+import LoadingSpinner from './components/LoadingSpinner';
 
 function App() {
   const [movies, setMovies] = useState([]);
-  
+  const[loading, setIsLoading] = useState(false);
   async function fetchmoviesHandler (){
+    setIsLoading(true);
    const response = await fetch('https://swapi.dev/api/films')
    const data = await response.json();
    
@@ -19,6 +21,7 @@ function App() {
           }
       });
       setMovies(transformedMovies);
+      setIsLoading(false);
   }
   return (
     <React.Fragment>
@@ -26,7 +29,8 @@ function App() {
         <button onClick={fetchmoviesHandler}>Fetch Movies</button>
       </section>
       <section>
-        <MoviesList movies={movies} />
+        {!loading && <MoviesList movies={movies} />}
+        {loading && <LoadingSpinner></LoadingSpinner>}
       </section>
     </React.Fragment>
   );
