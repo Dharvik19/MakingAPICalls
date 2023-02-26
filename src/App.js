@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import MoviesList from "./components/MoviesList";
 import "./App.css";
 import LoadingSpinner from "./components/LoadingSpinner";
+import AddMovies from "./components/AddMovies";
 
 function App() {
   const [movies, setMovies] = useState([]);
@@ -40,12 +41,15 @@ function App() {
   useEffect(() => {
     fetchmoviesHandler();
   }, [fetchmoviesHandler]);
-  
+
   const cancel = () => {
     abortController.current && abortController.current.abort();
   };
   return (
     <React.Fragment>
+      <section>
+        <AddMovies></AddMovies>
+      </section>
       <section>
         <button onClick={fetchmoviesHandler}>Fetch Movies</button>
       </section>
